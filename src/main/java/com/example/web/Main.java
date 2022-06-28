@@ -21,7 +21,8 @@ public class Main {
     public Map<String, Object> push(@RequestBody Map<String, Object> payload) {
         var x = new HashMap<String, Object>();
         String msg = String.valueOf(payload.get("msg"));
-        x.put("success", (msg != null && msg != "" && RedisConnection.push("list", msg) > 0l));
+        x.put("success", (msg != null && msg != ""
+                && RedisConnection.push("list", msg.substring(0, Math.min(64, msg.length()))) > 0l));
         return x;
     }
 
